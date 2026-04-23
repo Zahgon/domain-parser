@@ -55,34 +55,6 @@ def parse_domain(url, encoding='utf-8'):
     The optional encoding argument defaults to 'utf-8' and sets the encoding
     for the output strings.  Has no effect when running with Python 3.
     """
-
-    if not (url.startswith('http://') or url.startswith('https://')):
-        url = 'http://' + url
-    parsed = urlparse(url.lower())
-    hostname = (parsed.netloc if python_version else
-        parsed.netloc.decode('utf-8'))
-
-    tld = ''
-    tld_index = 0
-
-    uri = hostname.split('.')
-
-    for index in range(len(uri)):
-        tld_index = index
-        tld = '.'.join(uri[index:])
-        if tld in TLD_CACHE['normal']:
-            break
-        if '.'.join(['*'] + [uri[index+1]]) in TLD_CACHE['starred']:
-            break
-
-    second_level_domain = ''.join(uri[tld_index-1:tld_index])
-    subdomains = '.'.join(uri[:tld_index-1])
-
-    if python_version:
-        return tld, second_level_domain, subdomains
-    else:
-        return tld.encode(encoding),\
-               second_level_domain.encode(encoding),\
-               subdomains.encode(encoding)
+    pass
 
 TLD_CACHE = get_tlds()
